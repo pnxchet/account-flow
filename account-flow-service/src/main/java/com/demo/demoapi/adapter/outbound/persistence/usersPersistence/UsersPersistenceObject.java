@@ -1,4 +1,4 @@
-package com.demo.demoapi.adapter.outbound.persistence.usersPersistence;
+package com.demo.demoapi.adapter.outbound.persistence.UsersPersistence;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

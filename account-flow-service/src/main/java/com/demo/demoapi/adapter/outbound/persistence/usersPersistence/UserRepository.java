@@ -1,12 +1,10 @@
-package com.demo.demoapi.adapter.outbound.persistence.usersPersistence;
+package com.demo.demoapi.adapter.outbound.persistence.UsersPersistence;
 
 import com.demo.demoapi.application.exception.DatabaseErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.util.UUID;
 
 @Repository
 public class UserRepository {

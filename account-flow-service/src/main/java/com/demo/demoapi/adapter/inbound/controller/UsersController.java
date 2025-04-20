@@ -5,7 +5,7 @@ import com.demo.demoapi.adapter.inbound.communication.UsersRequest.UsersCreateRe
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("users")
+@RequestMapping("/users")
 public class UsersController {
 
     @GetMapping()

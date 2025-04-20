@@ -1,4 +1,4 @@
-package com.demo.demoapi.adapter.outbound.persistence.usersPersistence;
+package com.demo.demoapi.adapter.outbound.persistence.UsersPersistence;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

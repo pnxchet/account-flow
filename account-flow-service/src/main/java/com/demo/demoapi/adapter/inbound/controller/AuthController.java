@@ -1,5 +1,8 @@
 package com.demo.demoapi.adapter.inbound.controller;
 
+import com.demo.demoapi.adapter.inbound.communication.AuthRequest.LoginRequest;
+import com.demo.demoapi.adapter.inbound.communication.CommonResponse;
+import com.demo.demoapi.application.gateway.AuthGateway;
 import com.demo.demoapi.util.JwtUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,26 +22,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     @Autowired
-    private JwtUtil jwtUtil;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private AuthGateway authGateway;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
-        if (isValidUser(loginRequest.getUsername(), loginRequest.getPassword())) {
-            String jwt = jwtUtil.generateToken(loginRequest.getUsername());
-
-            Cookie cookie = new Cookie("jwt", jwt);
-            cookie.setHttpOnly(true);
-            cookie.setPath("/");
-            cookie.setMaxAge(60 * 60);
-            response.addCookie(cookie);
-
-            return ResponseEntity.ok(new AuthResponse(jwt, "Login successful"));
-        } else {
-            return ResponseEntity.badRequest().body("Invalid username or password");
-        }
+    public CommonResponse login(
+            @RequestBody LoginRequest request,
+            HttpServletResponse response
+    ) {
+        return authGateway.login(request, response);
     }
 
     @PostMapping("/logout")
@@ -63,20 +54,5 @@ public class AuthController {
 
         // ตัวอย่างง่ายๆ เพื่อการทดสอบ
         return "admin".equals(username) && "password".equals(password);
-    }
-
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class LoginRequest {
-        private String username;
-        private String password;
-    }
-
-    @Data
-    @AllArgsConstructor
-    public static class AuthResponse {
-        private String token;
-        private String message;
     }
 }

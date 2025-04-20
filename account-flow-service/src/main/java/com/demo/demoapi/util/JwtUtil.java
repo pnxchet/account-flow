@@ -7,6 +7,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -16,14 +17,14 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    @Value("${jwt.secret:defaultSecretKey}")
+    @Value("${jwt.secret}")
     private String secretKey;
 
-    @Value("${jwt.expiration:86400000}") // 24 hours by default
+    @Value("${jwt.expiration:86400000}")
     private long jwtExpiration;
 
     private Key getSigningKey() {
-        byte[] keyBytes = secretKey.getBytes();
+        byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
@@ -69,7 +70,6 @@ public class JwtUtil {
 
     public Boolean validateToken(String token) {
         try {
-            // ตรวจสอบว่า token หมดอายุหรือไม่
             return !isTokenExpired(token);
         } catch (Exception e) {
             return false;

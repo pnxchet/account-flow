@@ -20,3 +20,7 @@ spring:
           fetch_size: 50
   flyway:
     locations: classpath:db/migration
+
+jwt:
+  secret: IdgYppGhxiaJPRCSswyaZ0RBFilMJSxWeo5dMSHfouh12NwYzL9heQsNNjBv0D6WcDjlgHe0GDUs4GMloMkytQ==
+  expiration: 86400000

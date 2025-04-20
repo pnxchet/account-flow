@@ -20,7 +20,7 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // ดึง JWT จาก cookie
+        System.out.println("JWT Interceptor: Checking JWT token...");
         String jwt = null;
         if (request.getCookies() != null) {
             Optional<Cookie> jwtCookie = Arrays.stream(request.getCookies())
@@ -32,7 +32,6 @@ public class JwtInterceptor implements HandlerInterceptor {
             }
         }
 
-        // ถ้าไม่มี token หรือ token ไม่ถูกต้อง
         if (jwt == null || !jwtUtil.validateToken(jwt)) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.getWriter().write("Unauthorized: Invalid or missing JWT token");
