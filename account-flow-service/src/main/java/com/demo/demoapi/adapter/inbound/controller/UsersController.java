@@ -2,7 +2,6 @@ package com.demo.demoapi.adapter.inbound.controller;
 
 import com.demo.demoapi.adapter.inbound.communication.CommonResponse;
 import com.demo.demoapi.adapter.inbound.communication.UsersRequest.UsersCreateRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
