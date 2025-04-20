@@ -1,0 +1,61 @@
+.navbar {
+  background: linear-gradient(to right, #4a6cf7, #6a8cff);
+  box-shadow: 0 3px 12px rgba(74, 108, 247, 0.2);
+  padding: 14px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: none;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.left, .right {
+  display: flex;
+  align-items: center;
+}
+
+.homeButton {
+  background: none;
+  border: none;
+  font-size: 17px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  transition: all 0.2s;
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+}
+
+.homeIcon {
+  margin-right: 8px;
+  font-style: normal;
+}
+
+.logoutButton {
+  font-weight: 500 !important;
+  padding: 8px 16px !important;
+  border-radius: 6px !important;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+  
+  .homeButton {
+    font-size: 16px;
+    padding: 6px 10px;
+  }
+}
