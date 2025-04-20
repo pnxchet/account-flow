@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: demo-api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mydb
+    username: user-local
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        use_sql_comments: true
+        jdbc:
+          batch_size: 50
+          fetch_size: 50
+  flyway:
+    locations: classpath:db/migration
