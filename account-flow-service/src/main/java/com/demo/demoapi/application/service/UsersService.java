@@ -4,6 +4,6 @@ import com.demo.demoapi.application.gateway.UsersGateway;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TaskService implements UsersGateway {
+public class UsersService implements UsersGateway {
 
 }
