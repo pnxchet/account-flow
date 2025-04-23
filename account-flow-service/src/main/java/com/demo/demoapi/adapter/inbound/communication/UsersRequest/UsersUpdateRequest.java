@@ -6,18 +6,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class UsersCreateRequest {
-    @JsonProperty("username")
-    private String username;
+@AllArgsConstructor
+public class UsersUpdateRequest {
 
     @JsonProperty("email")
     private String email;
 
-    @JsonProperty("password")
-    private String password;
-
     @JsonProperty("name")
     private String name;
+
+    @JsonProperty("isActive")
+    private boolean isActive;
+
+    public boolean getIsActive() {
+        return this.isActive;
+    }
 }

@@ -27,6 +27,9 @@ public class UsersPersistenceObject {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "is_active")
     private boolean isActive;
 

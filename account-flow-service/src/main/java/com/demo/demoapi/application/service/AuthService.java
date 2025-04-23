@@ -2,7 +2,7 @@ package com.demo.demoapi.application.service;
 
 import com.demo.demoapi.adapter.inbound.communication.AuthRequest.LoginRequest;
 import com.demo.demoapi.adapter.inbound.communication.CommonResponse;
-import com.demo.demoapi.adapter.outbound.persistence.UsersPersistence.UserRepository;
+import com.demo.demoapi.adapter.outbound.persistence.UsersPersistence.UsersRepository;
 import com.demo.demoapi.adapter.outbound.persistence.UsersPersistence.UsersPersistenceObject;
 import com.demo.demoapi.application.exception.ConditionErrorException;
 import com.demo.demoapi.application.gateway.AuthGateway;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class AuthService implements AuthGateway {
 
     @Autowired
-    private UserRepository userRepository;
+    private UsersRepository userRepository;
 
     @Autowired
     private JwtUtil jwtUtil;
