@@ -21,7 +21,7 @@ function App() {
           content="default-src 'self'; 
                    img-src 'self' https://inwfile.com https://www.pngall.com https://i5.walmartimages.com https://assets.ajio.com https://png.pngtree.com https://media-cdn.bnn.in.th https://encrypted-tbn0.gstatic.com https://www.pngarts.com;
                    font-src 'none';
-                   connect-src 'none';
+                   connect-src 'self' http://localhost:8080;
                    frame-src 'none';
                    object-src 'none';
                    media-src 'none';

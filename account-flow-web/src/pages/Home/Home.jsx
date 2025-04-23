@@ -2,38 +2,15 @@ import React, { useState, useEffect } from "react";
 import { UserCard, Navbar } from "../../components/common";
 import { CircularProgress } from "@mui/material";
 import styles from "./Home.module.scss";
+import useUserStore from "../../core/stores/UserStore";
+import useCommonStore from "../../core/stores/commonStore";
 
 const Home = () => {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-
+  const { users, getUsers } = useUserStore();
+  const { loading, error } = useCommonStore();
+  
   useEffect(() => {
-    // Mock API call to fetch users
-    // In a real application, this would be replaced with an actual API call
-    const fetchUsers = async () => {
-      try {
-        // Simulate network delay
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
-        // Mock user data
-        const mockUsers = [
-          { id: 1, username: "johndoe", email: "john.doe@example.com" },
-          { id: 2, username: "janedoe", email: "jane.doe@example.com" },
-          { id: 3, username: "bobsmith", email: "bob.smith@example.com" },
-          { id: 4, username: "alicejones", email: "alice.jones@example.com" },
-          { id: 5, username: "mikebrown", email: "mike.brown@example.com" },
-          { id: 6, username: "sarahwilson", email: "sarah.wilson@example.com" },
-        ];
-        
-        setUsers(mockUsers);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchUsers();
+    getUsers()
   }, []);
 
   return (
@@ -52,9 +29,7 @@ const Home = () => {
               {users.map(user => (
                 <UserCard 
                   key={user.id}
-                  id={user.id}
-                  username={user.username}
-                  email={user.email}
+                  user={user}
                 />
               ))}
             </div>

@@ -1,9 +1,9 @@
 package com.demo.demoapi.application.service;
 
-import com.demo.demoapi.adapter.inbound.communication.AuthRequest.LoginRequest;
+import com.demo.demoapi.adapter.inbound.communication.AuthRequest.AuthRequest;
 import com.demo.demoapi.adapter.inbound.communication.CommonResponse;
-import com.demo.demoapi.adapter.outbound.persistence.UsersPersistence.UsersRepository;
-import com.demo.demoapi.adapter.outbound.persistence.UsersPersistence.UsersPersistenceObject;
+import com.demo.demoapi.adapter.outbound.persistence.UserCredentialPersistence.UserCredentialPersistenceObject;
+import com.demo.demoapi.adapter.outbound.persistence.UserCredentialPersistence.UserCredentialRepository;
 import com.demo.demoapi.application.exception.ConditionErrorException;
 import com.demo.demoapi.application.gateway.AuthGateway;
 import com.demo.demoapi.util.JwtUtil;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class AuthService implements AuthGateway {
 
     @Autowired
-    private UsersRepository userRepository;
+    private UserCredentialRepository userCredentialRepository;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -27,20 +27,16 @@ public class AuthService implements AuthGateway {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public CommonResponse login(LoginRequest request, HttpServletResponse response) {
+    public CommonResponse login(AuthRequest request, HttpServletResponse response) {
         String username = request.getUsername();
         String password = request.getPassword();
-        UsersPersistenceObject user = userRepository.findByUsername(username);
+        UserCredentialPersistenceObject user = userCredentialRepository.findByUsername(username);
         if (user == null) {
-            throw new ConditionErrorException("User not found");
+            throw new ConditionErrorException("Username or password is incorrect");
         }
 
-        if (!user.getPassword().equals(password)) {
-            throw new ConditionErrorException("Invalid password");
-        }
-
-        if (!user.isActive()) {
-            throw new ConditionErrorException("User is not active");
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new ConditionErrorException("Username or password is incorrect");
         }
 
         String jwt = jwtUtil.generateToken(username);
@@ -53,6 +49,27 @@ public class AuthService implements AuthGateway {
         return new CommonResponse(
                 String.valueOf(HttpStatus.OK.value()),
                 "Login successful",
+                null
+        );
+    }
+
+    @Override
+    public CommonResponse signUp(AuthRequest request) {
+        String username = request.getUsername();
+        String password = request.getPassword();
+        UserCredentialPersistenceObject existingUser = userCredentialRepository.findByUsername(username);
+        if (existingUser != null) {
+            throw new ConditionErrorException("User already exists");
+        }
+
+        UserCredentialPersistenceObject newUser = new UserCredentialPersistenceObject();
+        newUser.setUsername(username);
+        newUser.setPassword(passwordEncoder.encode(password));
+        userCredentialRepository.save(newUser);
+
+        return new CommonResponse(
+                String.valueOf(HttpStatus.CREATED.value()),
+                "Sign up successful",
                 null
         );
     }

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button, Navbar } from "../../components/common";
 import { CircularProgress } from "@mui/material";
 import styles from "./UserDetail.module.scss";
+import { getUserById } from "../../core/apis/UsersApi";
 
 const UserDetail = () => {
   const { id } = useParams();
@@ -13,21 +14,21 @@ const UserDetail = () => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 800));
+        const response = await getUserById(id);
 
-        // Mock data for demonstration
-        const mockUser = {
-          id: parseInt(id),
-          username: `user${id}`,
-          email: `user${id}@example.com`,
-          fullName: `User ${id}`,
-          createdAt: "2025-02-15T10:30:00Z",
-          status: "Active",
+        const user = {
+          id: parseInt(response.data.id),
+          username: response.data.username,
+          email: response.data.email,
+          fullName: response.data.name,
+          createdAt: response.data.createdAt,
+          status: response.data.active ? "Active" : "Inactive",
           role: "User",
         };
 
-        setUser(mockUser);
+        console.log(user)
+
+        setUser(user);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching user details:", error);

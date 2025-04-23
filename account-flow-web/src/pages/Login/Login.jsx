@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { Button, Input } from "../../components/common";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Alert } from "@mui/material";
 import styles from "./Login.module.scss";
-import { useNavigate } from "react-router-dom";
+import useAuthStore from "../../core/stores/authStore";
+import useCommonStore from "../../core/stores/commonStore";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     username: "",
-    password: ""
+    password: "",
   });
-  const [loading, setLoading] = useState(false);
+  const { loading, error } = useCommonStore();
+  const { login } = useAuthStore();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,27 +20,22 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log("Login submitted:", formData);
-      
-      // Navigate to home after successful login
-      // navigate("/");
-    } catch (error) {
-      console.error("Login error:", error);
-    } finally {
-      setLoading(false);
-    }
+    login(formData);
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.formCard}>
+        {error && (
+          <Alert severity="error" sx={{ mb: 4 }}>
+            {error}
+          </Alert>
+        )}
         <h1 className={styles.title}>Login</h1>
-        <form className={`${styles.form} ${loading ? styles.contentLoading : ""}`} onSubmit={handleSubmit}>
+        <form
+          className={`${styles.form} ${loading ? styles.contentLoading : ""}`}
+          onSubmit={handleSubmit}
+        >
           <Input
             id="username"
             name="username"
@@ -49,7 +46,7 @@ const Login = () => {
             label="Username"
             disabled={loading}
           />
-          
+
           <Input
             id="password"
             name="password"
@@ -60,7 +57,7 @@ const Login = () => {
             label="Password"
             disabled={loading}
           />
-          
+
           <Button type="submit" variant="primary" fullWidth disabled={loading}>
             Login
           </Button>
@@ -68,14 +65,10 @@ const Login = () => {
         <div className={styles.signupLink}>
           Don't have an account? <a href="/signup">Sign up</a>
         </div>
-        
+
         {loading && (
           <div className={styles.loadingOverlay}>
-            <CircularProgress 
-              size={50}
-              thickness={4}
-              color="primary"
-            />
+            <CircularProgress size={50} thickness={4} color="primary" />
           </div>
         )}
       </div>

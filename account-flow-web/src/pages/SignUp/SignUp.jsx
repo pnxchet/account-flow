@@ -2,23 +2,25 @@ import React, { useState } from "react";
 import { Button, Input } from "../../components/common";
 import { CircularProgress } from "@mui/material";
 import styles from "./SignUp.module.scss";
+import useAuthStore from "../../core/stores/authStore";
+import useCommonStore from "../../core/stores/commonStore";
 
 const SignUp = () => {
+
   const [formData, setFormData] = useState({
     username: "",
-    email: "",
     password: "",
     confirmPassword: ""
   });
 
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
+  const { loading } = useCommonStore();
+  const { signup } = useAuthStore();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    
-    // Clear error when user types
+
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
@@ -27,12 +29,6 @@ const SignUp = () => {
   const validateForm = () => {
     const newErrors = {};
     
-    // Password validation - only check length, required is handled by HTML
-    if (formData.password && formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
-    }
-    
-    // Confirm password validation - only check matching
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match";
     }
@@ -43,22 +39,8 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     if (validateForm()) {
-      setLoading(true);
-      
-      try {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        console.log("Sign up submitted:", formData);
-        
-        // Navigate to login or home after successful signup
-        // navigate("/login");
-      } catch (error) {
-        console.error("Signup error:", error);
-      } finally {
-        setLoading(false);
-      }
+      signup(formData);
     }
   };
 
@@ -77,19 +59,6 @@ const SignUp = () => {
             label="Username"
             required
             error={errors.username}
-            disabled={loading}
-          />
-          
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Enter your email"
-            label="Email"
-            required
-            error={errors.email}
             disabled={loading}
           />
           
