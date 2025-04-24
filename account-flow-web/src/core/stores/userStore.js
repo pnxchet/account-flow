@@ -29,7 +29,7 @@ const createUser = async (params, set) => {
         const response = await callCreateUser(newUser)
     } catch (error) {
         console.error('Error fetching user:', error)
-        useCommonStore.getState().setError(validDateError(error))
+        useCommonStore.getState().setError(validateError(error))
     } finally {
         useCommonStore.getState().setLoading(false)
     }
@@ -38,7 +38,6 @@ const createUser = async (params, set) => {
 const updateUser = async (params, set) => {
     useCommonStore.getState().setLoading(true)
     const user = useUserStore.getState().user
-    console.log("aa",params)
     const updatedUser = {
         email: params.email,
         name: params.name,
@@ -49,7 +48,7 @@ const updateUser = async (params, set) => {
         window.location.reload()
     } catch (error) {
         console.error('Error fetching user:', error)
-        useCommonStore.getState().setError(validDateError(error))
+        useCommonStore.getState().setError(validateError(error))
     } finally {
         useCommonStore.getState().setLoading(false)
     }
@@ -65,7 +64,7 @@ const deleteUser = async (params) => {
         }
     } catch (error) {
         console.error('Error deleting user:', error)
-        useCommonStore.getState().setError(validDateError(error))
+        useCommonStore.getState().setError(validateError(error))
     } finally {
         useCommonStore.getState().setLoading(false)
     }
@@ -87,7 +86,7 @@ const getUserDetail = async (params, set) => {
         set({ user: user })
     } catch (error) {
         console.error('Error fetching user:', error)
-        useCommonStore.getState().setError(validDateError(error))
+        useCommonStore.getState().setError(validateError(error))
     } finally {
         useCommonStore.getState().setLoading(false)
     }
@@ -100,14 +99,35 @@ const getUsers = async (set) => {
         set({ users: response.data })
     } catch (error) {
         console.error('Error fetching users:', error)
-        useCommonStore.getState().setError(validDateError(error))
+        useCommonStore.getState().setError(validateError(error))
     } finally {
         useCommonStore.getState().setLoading(false)
     }
 }
 
-const validDateError = (error) => {
+const validateError = (error) => {
+    if (!error?.status) {
+        return "Service unavailable"
+    }
     if (error?.status === 401) {
+        useCommonStore.getState().fetchDialog(true, {
+            title: "Login Required",
+            message: "Please log in.",
+            labelSubmit: "OK"
+        }, () => {
+            window.location.href = "/login"
+            useCommonStore.getState().resetDialog()
+        })
+        return error?.message
+    } else if (error?.status === 403) {
+        useCommonStore.getState().fetchDialog(true, {
+            title: "Login Required",
+            message: "Please log in.",
+            labelSubmit: "OK"
+        }, () => {
+            window.location.href = "/login"
+            useCommonStore.getState().resetDialog()
+        })
         return error?.message
     } else {
         return error?.response?.data?.message
