@@ -29,7 +29,7 @@ const createUser = async (params, set) => {
         const response = await callCreateUser(newUser)
     } catch (error) {
         console.error('Error fetching user:', error)
-        useCommonStore.getState().setError(error?.response?.data?.message)
+        useCommonStore.getState().setError(validDateError(error))
     } finally {
         useCommonStore.getState().setLoading(false)
     }
@@ -49,7 +49,7 @@ const updateUser = async (params, set) => {
         window.location.reload()
     } catch (error) {
         console.error('Error fetching user:', error)
-        useCommonStore.getState().setError(error?.response?.data?.message)
+        useCommonStore.getState().setError(validDateError(error))
     } finally {
         useCommonStore.getState().setLoading(false)
     }
@@ -65,7 +65,7 @@ const deleteUser = async (params) => {
         }
     } catch (error) {
         console.error('Error deleting user:', error)
-        useCommonStore.getState().setError(error?.response?.data?.message)
+        useCommonStore.getState().setError(validDateError(error))
     } finally {
         useCommonStore.getState().setLoading(false)
     }
@@ -87,7 +87,7 @@ const getUserDetail = async (params, set) => {
         set({ user: user })
     } catch (error) {
         console.error('Error fetching user:', error)
-        useCommonStore.getState().setError(error?.response?.data?.message)
+        useCommonStore.getState().setError(validDateError(error))
     } finally {
         useCommonStore.getState().setLoading(false)
     }
@@ -100,9 +100,17 @@ const getUsers = async (set) => {
         set({ users: response.data })
     } catch (error) {
         console.error('Error fetching users:', error)
-        useCommonStore.getState().setError(error?.response?.data?.message)
+        useCommonStore.getState().setError(validDateError(error))
     } finally {
         useCommonStore.getState().setLoading(false)
+    }
+}
+
+const validDateError = (error) => {
+    if (error?.status === 401) {
+        return error?.message
+    } else {
+        return error?.response?.data?.message
     }
 }
 

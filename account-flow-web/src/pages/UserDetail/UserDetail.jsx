@@ -66,7 +66,6 @@ const UserDetail = () => {
 
   const handleCancelEdit = () => {
     setIsEditing(false);
-    // Reset form values to original user data
     if (user) {
       setFormValues({
         name: user.name || "",

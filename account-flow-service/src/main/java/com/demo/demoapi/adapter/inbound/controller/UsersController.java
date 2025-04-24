@@ -34,7 +34,7 @@ public class UsersController {
     }
 
     @PutMapping("/{userId}")
-    public CommonResponse updateTaskStatus(
+    public CommonResponse updateUser(
             @PathVariable String userId,
             @RequestBody UsersUpdateRequest request
             ) {
@@ -42,7 +42,7 @@ public class UsersController {
     }
 
     @DeleteMapping("/{userId}")
-    public CommonResponse deleteTask(
+    public CommonResponse deleteUser(
             @PathVariable String userId
     ) {
         return usersGateway.deleteUser(userId);

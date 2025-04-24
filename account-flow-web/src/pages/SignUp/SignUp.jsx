@@ -20,22 +20,9 @@ const SignUp = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      signup(formData);
-    }
+    signup(formData);
   };
 
   return (
@@ -60,7 +47,6 @@ const SignUp = () => {
             placeholder="Enter your username"
             label="Username"
             required
-            error={errors.username}
             disabled={loading}
           />
 
@@ -73,7 +59,6 @@ const SignUp = () => {
             placeholder="Create a password"
             label="Password"
             required
-            error={errors.password}
             disabled={loading}
           />
 
@@ -86,7 +71,6 @@ const SignUp = () => {
             placeholder="Confirm your password"
             label="Confirm Password"
             required
-            error={errors.confirmPassword}
             disabled={loading}
           />
 

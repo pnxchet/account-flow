@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: user-local
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./account-flow-service
+    container_name: account_backend
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: mydb
+      DB_USERNAME: user-local
+      DB_PASSWORD: password
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+
+  web:
+    build:
+      context: ./account-flow-web
+      args:
+        VITE_BASE_URL: http://backend:8080
+    container_name: account_web
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:

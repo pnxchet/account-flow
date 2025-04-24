@@ -39,12 +39,16 @@ public class AuthService implements AuthGateway {
             throw new ConditionErrorException("Username or password is incorrect");
         }
 
-        String jwt = jwtUtil.generateToken(username);
-        Cookie cookie = new Cookie("jwt", jwt);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
-        cookie.setMaxAge(60 * 60);
-        response.addCookie(cookie);
+        try {
+            String jwt = jwtUtil.generateToken(username);
+            Cookie cookie = new Cookie("jwt", jwt);
+            cookie.setHttpOnly(true);
+            cookie.setPath("/");
+            cookie.setMaxAge(60 * 60);
+            response.addCookie(cookie);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to generate JWT token");
+        }
 
         return new CommonResponse(
                 String.valueOf(HttpStatus.OK.value()),

@@ -29,7 +29,7 @@ const Home = () => {
             {users.length} {users.length === 1 ? "user" : "users"} found
           </div>
 
-          {users.length > 0 ? (
+          {users ? (
             <div className={styles.grid}>
               {users.map((user) => (
                 <UserCard key={user.id} user={user} />

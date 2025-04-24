@@ -47,6 +47,9 @@
     "util": "^0.12.5",
     "vite": "^6.2.1"
   },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-musl": "4.9.5"
+  },
   "jest": {
     "testEnvironment": "jest-environment-jsdom",
     "moduleFileExtensions": [
