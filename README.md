@@ -4,7 +4,7 @@
 
 ### ความต้องการของระบบ
 - [Docker](https://www.docker.com/get-started) และ [Docker Compose](https://docs.docker.com/compose/install/)
-- ไม่จำเป็นต้องติดตั้ง Node.js หรือ PostgreSQL ในเครื่องเพราะ Docker จะจัดการให้ทั้งหมด
+- ไม่จำเป็นต้องติดตั้ง Node.js, Java, PostgreSQL ในเครื่องเพราะ Docker จะจัดการให้ทั้งหมด
 
 ### วิธีการเริ่มต้นใช้งาน
 
@@ -27,12 +27,12 @@
    docker ps
    ```
    คุณควรจะเห็นคอนเทนเนอร์ 3 ตัว: `postgres`, `account-flow-backend` และ `account-flow-web`
-   
+
 ## การแก้ไขปัญหา
 
 ### ปัญหา: คอนเทนเนอร์ไม่ทำงาน
 - ตรวจสอบล็อกด้วยคำสั่ง: `docker logs <container_name>`
-- ตรวจสอบว่าพอร์ต 5432 และ 3000 ไม่ถูกใช้งานโดยโปรแกรมอื่น
+- ตรวจสอบว่าพอร์ต 80, 5432 และ 8080 ไม่ถูกใช้งานโดยโปรแกรมอื่น
 
 ### ปัญหา: API ไม่ตอบสนอง
 - ตรวจสอบว่าคอนเทนเนอร์ทั้งหมดทำงานอยู่: `docker ps`
@@ -51,3 +51,8 @@ docker-compose down
 ถ้าต้องการลบข้อมูลทั้งหมดและเริ่มต้นใหม่:
 ```bash
 docker-compose down -v
+```
+
+## API Document
+หลังจากระบบเริ่มทำงาน สามารถดู API Documentได้ที่
+[Swagger](http://localhost:8080/swagger-ui/index.html)
