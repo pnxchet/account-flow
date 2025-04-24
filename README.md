@@ -18,6 +18,10 @@
    ```bash
    docker-compose up -d
    ```
+   หรือ
+   ```bash
+   docker compose up -d
+   ```
    คำสั่งนี้จะ:
    - สร้างและเริ่มเซิร์ฟเวอร์ PostgreSQL
    - สร้างและเริ่มแอปพลิเคชัน Node.js และ Spring boot
@@ -34,12 +38,8 @@
 - ตรวจสอบล็อกด้วยคำสั่ง: `docker logs <container_name>`
 - ตรวจสอบว่าพอร์ต 80, 5432 และ 8080 ไม่ถูกใช้งานโดยโปรแกรมอื่น
 
-### ปัญหา: API ไม่ตอบสนอง
-- ตรวจสอบว่าคอนเทนเนอร์ทั้งหมดทำงานอยู่: `docker ps`
-- รีสตาร์ทแอปพลิเคชัน: `docker-compose restart app`
-
-### ปัญหา: ฐานข้อมูลไม่ทำงาน
-- ล้างข้อมูลและเริ่มต้นใหม่: `docker-compose down -v && docker-compose up -d`
+### ปัญหา: อื่น ๆ
+- ล้างข้อมูลและเริ่มต้นใหม่: `docker-compose down -v && docker-compose up -d` หรือ `docker compose down -v && docker compose up -d`
 
 ## การปิดการทำงาน
 
@@ -47,10 +47,18 @@
 ```bash
 docker-compose down
 ```
+หรือ
+```bash
+docker compose down
+```
 
 ถ้าต้องการลบข้อมูลทั้งหมดและเริ่มต้นใหม่:
 ```bash
 docker-compose down -v
+```
+หรือ
+```bash
+docker compose down -v
 ```
 
 ## API Document
