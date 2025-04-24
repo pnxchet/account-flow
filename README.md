@@ -30,7 +30,7 @@
    ```bash
    docker ps
    ```
-   คุณควรจะเห็นคอนเทนเนอร์ 3 ตัว: `postgres`, `account-flow-backend` และ `account-flow-web`
+   คุณควรจะเห็นคอนเทนเนอร์ 3 ตัว: `postgres_db`, `account-flow-backend` และ `account-flow-web`
 
 ## การแก้ไขปัญหา
 
