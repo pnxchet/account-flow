@@ -21,7 +21,7 @@ export const getUserById = async (id) => {
     }
 }
 
-export const createUser = async (userData) => {
+export const callCreateUser = async (userData) => {
     try {
         const response = await axios.post(RouteConstant.USERS, userData, { withCredentials: true });
         return response.data;
@@ -31,7 +31,7 @@ export const createUser = async (userData) => {
     }
 }
 
-export const updateUser = async (id, userData) => {
+export const callUpdateUser = async (id, userData) => {
     try {
         const response = await axios.put(`${RouteConstant.USERS}/${id}`, userData, { withCredentials: true });
         return response.data;
@@ -41,7 +41,7 @@ export const updateUser = async (id, userData) => {
     }
 }
 
-export const deleteUser = async (id) => {
+export const callDeleteUser = async (id) => {
     try {
         const response = await axios.delete(`${RouteConstant.USERS}/${id}`, { withCredentials: true });
         return response.data;

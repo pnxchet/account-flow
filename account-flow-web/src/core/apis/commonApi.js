@@ -13,7 +13,17 @@ export const callLogin = async (data) => {
 
 export const callSignUp = async (data) => {
     try {
-        const response = await axios.post("http://localhost:8080/api/auth/signup", data);
+        const response = await axios.post(RouteConstant.SIGN_UP, data);
+        return response.data;
+    } catch (error) {
+        console.error('Error calling access token API:', error);
+        throw error;
+    }
+}
+
+export const callLogout = async () => {
+    try {
+        const response = await axios.post(RouteConstant.LOGOUT, {}, { withCredentials: true });
         return response.data;
     } catch (error) {
         console.error('Error calling access token API:', error);

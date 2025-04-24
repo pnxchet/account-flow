@@ -20,11 +20,35 @@
   align-items: center;
 }
 
-.homeButton {
+.navButton {
   background: none;
   border: none;
   font-size: 17px;
   font-weight: 600;
+  color: white;
+  cursor: pointer;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  transition: all 0.2s;
+  margin-right: 8px;
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+}
+
+.navIcon {
+  margin-right: 8px;
+  font-style: normal;
+}
+
+.logoutLink {
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
   color: white;
   cursor: pointer;
   padding: 8px 12px;
@@ -38,23 +62,12 @@
   }
 }
 
-.homeIcon {
-  margin-right: 8px;
-  font-style: normal;
-}
-
-.logoutButton {
-  font-weight: 500 !important;
-  padding: 8px 16px !important;
-  border-radius: 6px !important;
-}
-
 @media (max-width: 768px) {
   .container {
     padding: 0 15px;
   }
   
-  .homeButton {
+  .navButton, .logoutLink {
     font-size: 16px;
     padding: 6px 10px;
   }

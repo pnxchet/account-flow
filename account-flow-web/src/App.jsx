@@ -4,6 +4,8 @@ import { CacheProvider } from "@emotion/react";
 import { uuidv7 } from "uuidv7";
 import emotionCreateCache from "@emotion/cache";
 import AppRouter from "./routes/AppRouter";
+import useCommonStore from "./core/stores/commonStore";
+import { AlertDialog } from "./components/common";
 
 const correctlyNoncedEmotionCache = emotionCreateCache({
   key: "styled-components-cache-key",
@@ -12,6 +14,22 @@ const correctlyNoncedEmotionCache = emotionCreateCache({
 });
 
 function App() {
+  const { dialogContent, openDialog, dialogSubmit, dialogCancel } =
+    useCommonStore();
+
+  const dialogComponent = (
+    <AlertDialog
+      open={openDialog}
+      title={dialogContent?.title}
+      message={dialogContent?.message}
+      width={dialogContent?.width}
+      labelSubmit={dialogContent?.labelSubmit}
+      submit={dialogSubmit}
+      labelCancel={dialogContent?.labelCancel}
+      cancel={dialogCancel}
+    />
+  );
+
   return (
     <>
       <Helmet>
@@ -33,6 +51,7 @@ function App() {
       </Helmet>
       <CacheProvider value={correctlyNoncedEmotionCache}>
         <AppRouter />
+        {dialogComponent}
       </CacheProvider>
     </>
   );

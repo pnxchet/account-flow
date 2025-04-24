@@ -43,14 +43,12 @@ public class UsersService implements UsersGateway {
     public CommonResponse createUser(UsersCreateRequest request) {
         UUID id = UUID.randomUUID();
         LocalDateTime createdAt = LocalDateTime.now();
-        boolean isActive = true;
         UsersPersistenceObject user = new UsersPersistenceObject(
                 id,
                 request.getUsername(),
                 request.getEmail(),
-                request.getPassword(),
                 request.getName(),
-                isActive,
+                request.getIsActive(),
                 createdAt
         );
         UsersPersistenceObject resultUser = usersRepository.save(user);

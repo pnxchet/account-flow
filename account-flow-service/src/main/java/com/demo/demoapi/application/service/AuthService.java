@@ -73,4 +73,19 @@ public class AuthService implements AuthGateway {
                 null
         );
     }
+
+    @Override
+    public CommonResponse logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("jwt", null);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+
+        return new CommonResponse(
+                String.valueOf(HttpStatus.OK.value()),
+                "Logout successful",
+                null
+        );
+    }
 }

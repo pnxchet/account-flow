@@ -8,4 +8,6 @@ public interface AuthGateway {
     CommonResponse login(AuthRequest request, HttpServletResponse response);
 
     CommonResponse signUp(AuthRequest request);
+
+    CommonResponse logout(HttpServletResponse response);
 }

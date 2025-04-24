@@ -31,4 +31,11 @@ public class AuthController {
     ) {
         return authGateway.signUp(request);
     }
+
+    @PostMapping("/logout")
+    public CommonResponse logout(
+            HttpServletResponse response
+    ) {
+        return authGateway.logout(response);
+    }
 }

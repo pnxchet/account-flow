@@ -1,38 +1,32 @@
 import React, { useState } from "react";
 import { Button, Input } from "../../components/common";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Alert } from "@mui/material";
 import styles from "./SignUp.module.scss";
 import useAuthStore from "../../core/stores/authStore";
 import useCommonStore from "../../core/stores/commonStore";
 
 const SignUp = () => {
-
   const [formData, setFormData] = useState({
     username: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
 
-  const [errors, setErrors] = useState({});
-  const { loading } = useCommonStore();
+  const { loading, error } = useCommonStore();
   const { signup } = useAuthStore();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: "" }));
-    }
   };
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match";
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -47,8 +41,16 @@ const SignUp = () => {
   return (
     <div className={styles.container}>
       <div className={styles.formCard}>
+        {error && (
+          <Alert severity="error" sx={{ mb: 4 }}>
+            {error}
+          </Alert>
+        )}
         <h1 className={styles.title}>Create Account</h1>
-        <form className={`${styles.form} ${loading ? styles.contentLoading : ""}`} onSubmit={handleSubmit}>
+        <form
+          className={`${styles.form} ${loading ? styles.contentLoading : ""}`}
+          onSubmit={handleSubmit}
+        >
           <Input
             id="username"
             name="username"
@@ -61,7 +63,7 @@ const SignUp = () => {
             error={errors.username}
             disabled={loading}
           />
-          
+
           <Input
             id="password"
             name="password"
@@ -74,7 +76,7 @@ const SignUp = () => {
             error={errors.password}
             disabled={loading}
           />
-          
+
           <Input
             id="confirmPassword"
             name="confirmPassword"
@@ -87,27 +89,25 @@ const SignUp = () => {
             error={errors.confirmPassword}
             disabled={loading}
           />
-          
+
           <div className={styles.termsAgreement}>
-            By signing up, you agree to our <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>
+            By signing up, you agree to our{" "}
+            <a href="/terms">Terms of Service</a> and{" "}
+            <a href="/privacy">Privacy Policy</a>
           </div>
-          
+
           <Button type="submit" variant="primary" fullWidth disabled={loading}>
             Sign Up
           </Button>
         </form>
-        
+
         <div className={styles.loginLink}>
           Already have an account? <a href="/login">Login</a>
         </div>
-        
+
         {loading && (
           <div className={styles.loadingOverlay}>
-            <CircularProgress 
-              size={50}
-              thickness={4}
-              color="primary"
-            />
+            <CircularProgress size={50} thickness={4} color="primary" />
           </div>
         )}
       </div>
