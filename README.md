@@ -62,5 +62,5 @@ docker compose down -v
 ```
 
 ## API Document
-หลังจากระบบเริ่มทำงาน สามารถดู API Documentได้ที่
+หลังจากระบบเริ่มทำงาน สามารถดู API Document ได้ที่
 [Swagger](http://localhost:8080/swagger-ui/index.html)
